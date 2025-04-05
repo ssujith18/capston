@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5x10 Table with Booking</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #101010;
+        }
+        table {
+            border-collapse: collapse;
+            text-align: center;
+            background-color: white;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid rgb(243, 239, 239);
+            padding: 10px;
+            width: 60px;
+            height: 60px;
+        }
+        button {
+            margin-top: 5px;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            background-color: rgb(66, 94, 237);
+            color: rgb(247, 244, 244);
+            border-radius: 5px;
+        }
+        .selected {
+            background-color: rgb(30, 218, 86);
+        }
+        #bookBtn {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: rgb(19, 219, 219);
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <tbody>
+            <script>
+                let count = 1;
+                for (let i = 0; i < 5; i++) { // 5 rows
+                    document.write("<tr>");
+                    for (let j = 0; j < 10; j++) { // 10 columns
+                        document.write(`
+                            <td id="cell-${count}">
+                                ${count} <br>
+                                <button onclick="selectCell(${count})">Select</button>
+                            </td>
+                        `);
+                        count++;
+                    }
+                    document.write("</tr>");
+                }
+            </script>
+        </tbody>
+    </table>
+
+    <button><a href="D:\projects 4thyear\EDU\INNOVATION 6787\project\BOOK\b.html">BOOK YOUR PLACE</a></button>
+
+    <script>
+        function selectCell(cellId) {
+            let cell = document.getElementById(`cell-${cellId}`);
+            cell.classList.toggle("selected");
+        }
+
+        function bookSelection() {
+            let selectedCells = document.querySelectorAll(".selected");
+            let selectedNumbers = Array.from(selectedCells).map(cell => cell.textContent.trim().split(" ")[0]);
+
+            if (selectedNumbers.length > 0) {
+                // Redirect to next.html with selected numbers in the URL
+                window.location.href = `next.html?selected=${selectedNumbers.join(",")}`;
+            }
+        }
+    </script>
+
+</body>
+</html>

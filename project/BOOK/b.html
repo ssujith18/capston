@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Successful</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+            background-color: #1fe3f1;
+            overflow: hidden;
+        }
+        .container {
+            width: 150%;
+            max-width: 170px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgb(247, 245, 245);
+            border-radius: 10px;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+        h1 {
+            color: #28a745;
+            font-size: 24px;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #f39b20;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .button:hover {
+            background-color: #ee9d11;
+        }
+        .thumb-image {
+            width: 160%;
+            margin-bottom: 20px;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="shapeCanvas"></canvas>
+    <div class="container">
+        <img src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png" alt="Thank You Thumbs Up" class="thumb-image">
+        <h1>Booking Successful!</h1>
+        <p>Thank you for reserving a table at our restaurant. We look forward to serving you!</p>
+        <button><a href="D:\projects 4thyear\EDU\INNOVATION 6787\project\topmenu.html">BACK TO HOME</a></button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("shapeCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const shapes = [];
+        const shapeColors = ["#FF0000", "#FF8000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"];
+        const shapeTypes = ["circle", "square", "triangle"];
+
+        class ShapeParticle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 10 + 5;
+                this.color = shapeColors[Math.floor(Math.random() * shapeColors.length)];
+                this.type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 10 + 5;
+                this.velocityX = Math.cos(angle) * speed;
+                this.velocityY = Math.sin(angle) * speed;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 10;
+                this.opacity = 1;
+                this.bounceCount = 0; // Track bounces
+            }
+
+            update() {
+                this.x += this.velocityX;
+                this.y += this.velocityY;
+                this.velocityY += 0.2; // Gravity
+
+                if (this.y > canvas.height - this.size) {
+                    this.y = canvas.height - this.size;
+                    this.velocityY *= -0.6; // Bounce effect
+                    this.bounceCount++;
+                }
+
+                if (this.bounceCount > 3) {
+                    this.opacity -= 0.02; // Fade out after bouncing
+                }
+
+                this.rotation += this.rotationSpeed;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+
+                if (this.type === "circle") {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (this.type === "square") {
+                    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                } else if (this.type === "triangle") {
+                    ctx.beginPath();
+                    ctx.moveTo(-this.size / 2, this.size / 2);
+                    ctx.lineTo(this.size / 2, this.size / 2);
+                    ctx.lineTo(0, -this.size / 2);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        function createShapeBlast() {
+            for (let i = 0; i < 80; i++) { // 80 shapes for blast
+                const x = window.innerWidth / 2;
+                const y = window.innerHeight / 2;
+                shapes.push(new ShapeParticle(x, y));
+            }
+        }
+
+        function animateShapes() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = shapes.length - 1; i >= 0; i--) {
+                shapes[i].update();
+                shapes[i].draw();
+                if (shapes[i].opacity <= 0) {
+                    shapes.splice(i, 1);
+                }
+            }
+            if (shapes.length > 0) {
+                requestAnimationFrame(animateShapes);
+            }
+        }
+
+        createShapeBlast();
+        animateShapes();
+
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>

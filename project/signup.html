@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Video Page with Login, Signup, and Email Verification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: rgb(205, 133, 8);
+            text-align: center;
+            padding: 20px;
+        }
+        .box {
+            background: rgb(32, 28, 28),red,blue;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 10px 50px rgba(35, 126, 188, 0.5);
+            width: 300px;
+        }
+        .box h2 {
+            margin-bottom: 15px;
+        }
+        .box input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        .box button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #6bdaf0;
+            color: rgb(9, 5, 0);
+            cursor: pointer;
+        }
+        .box button:hover {
+            background: #1581b3;
+        }
+        .link {
+            margin-top: 15px;
+        }
+        .link a {
+            color: #00bfff;
+            text-decoration: none;
+        }
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src= "C:\Users\user\Downloads\4058085-uhd_4096_2160_25fps.mp4" type="video/mp4">
+        </video>
+    </div>
+    
+    <!-- Login Page -->
+    <div class="content" id="login-page">
+        <div class="box">
+            <h2>Food Gastronomic</h2>
+            <form>
+                <input type="text" placeholder="Username" required>
+                <input type="password" placeholder="Password" required>
+                <button><a href="D:\projects 4thyear\EDU\INNOVATION 6787\project\well.html">Login</a></button>
+            </form>
+            <div class="link">
+                <p>Don't have an account? <a href="#signup-page">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div class="content" id="signup-page" style="display: none;">
+        <div class="box">
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <input type="password" placeholder="Confirm Password" required>
+                <button type="button" onclick="showVerifyPage()">Sign Up</button>
+            </form>
+            <div class="link">
+                <p>Already have an account? <a href="#login-page">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Verification Page -->
+    <div class="content" id="verify-page" style="display: none;">
+        <div class="box">
+            <h2>Verify Email</h2>
+            <p>Enter the 6-digit code sent to your email.</p>
+            <form onsubmit="showSuccessPage(event)">
+                <input type="text" placeholder="Verification Code" required>
+                <button type="submit">Verify</button>
+            </form>
+            <div class="link">
+                <p>Didn't receive a code? <a href="#">Resend Code</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Page -->
+    <div class="content" id="success-page" style="display: none;">
+        <div class="box">
+            <h2>Verification Successful</h2>
+            <p>Your email has been verified successfully!</p>
+            <div class="C:\Users\user\OneDrive\Desktop\signup.html">
+                <p><a href="C:\Users\user\OneDrive\Desktop\signup.html">Go to Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const loginPage = document.getElementById('login-page');
+        const signupPage = document.getElementById('signup-page');
+        const verifyPage = document.getElementById('verify-page');
+        const successPage = document.getElementById('success-page');
+        
+        document.querySelector('a[href="#signup-page"]').onclick = () => {
+            loginPage.style.display = 'none';
+            signupPage.style.display = 'flex';
+        };
+        
+        document.querySelector('a[href="C:\Users\OneDrive\Desktop\signup.html"]').onclick = () => {
+            signupPage.style.display = 'none';
+            loginPage.style.display = 'flex';
+        };
+        
+        function showVerifyPage() {
+            signupPage.style.display = 'none';
+            verifyPage.style.display = 'flex';
+        }
+        
+        function showSuccessPage(event) {
+            event.preventDefault();
+            verifyPage.style.display = 'none';
+            successPage.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
+
